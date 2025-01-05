@@ -1,9 +1,12 @@
 import { WebSocketServer, WebSocket } from "ws";
+import { v4 as uuidv4 } from "uuid";
 
 const wss = new WebSocketServer({ port: 9999 });
 const rooms = {};
 
 wss.on("connection", (ws) => {
+  ws.id = uuidv4(); // Assign a unique ID to each player
+
   ws.on("message", (message) => {
     const data = JSON.parse(message);
     console.log("Received:", data);
@@ -16,7 +19,6 @@ wss.on("connection", (ws) => {
       if (rooms[room].players.length < 2) {
         rooms[room].players.push(ws);
         ws.room = room;
-        ws.id = `${room}-${rooms[room].players.length}`; // Assign a unique ID to each player
         ws.send(JSON.stringify({ type: "roomJoined", room }));
         if (rooms[room].players.length === 2) {
           rooms[room].players.forEach((player) => {
