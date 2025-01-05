@@ -1,11 +1,11 @@
-import { WebSocketServer, WebSocket } from "ws";
+import { WebSocketServer } from "ws";
 import { v4 as uuidv4 } from "uuid";
 
 const wss = new WebSocketServer({ port: 9999 });
 const rooms = {};
 
 wss.on("connection", (ws) => {
-  ws.id = uuidv4(); // Assign a unique ID to each player
+  ws.id = uuidv4();
 
   ws.on("message", (message) => {
     const data = JSON.parse(message);

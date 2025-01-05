@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useWebSocket } from "../websocket/WebSocketProvider";
+import RPSDetector from "./RPSDetector";
 
 function RPSGame() {
   const { socket, joinRoom } = useWebSocket()!;
@@ -81,38 +82,43 @@ function RPSGame() {
         </div>
       )}
       {gameStarted && (
-        <div className="flex flex-col items-center">
-          <div className="mb-8">
-            <button
-              onClick={() => makeChoice("rock")}
-              className={`px-4 py-2 rounded-md mx-2 ${
-                choice ? "bg-gray-300 cursor-not-allowed" : "bg-slate-600 hover:bg-slate-700 text-white"
-              }`}
-              disabled={!!choice}
-            >
-              🪨 Rock
-            </button>
-            <button
-              onClick={() => makeChoice("paper")}
-              className={`px-4 py-2 rounded-md mx-2 ${
-                choice ? "bg-gray-300 cursor-not-allowed" : "bg-neutral-400 hover:bg-neutral-500 text-white"
-              }`}
-              disabled={!!choice}
-            >
-              📃 Paper
-            </button>
-            <button
-              onClick={() => makeChoice("scissors")}
-              className={`px-4 py-2 rounded-md mx-2 ${
-                choice ? "bg-gray-300 cursor-not-allowed" : "bg-red-500 hover:bg-red-600 text-white"
-              }`}
-              disabled={!!choice}
-            >
-              ✂️ Scissors
-            </button>
-          </div>
+        <div className="flex flex-wrap gap-5 items-center justify-center">
+          <RPSDetector choice={choice} makeChoiceFn={makeChoice} />
           {opponentHasChosen && <h2 className="text-2xl mb-8">Opponent already chose</h2>}
-          <div className="text-center p-4 bg-white shadow-md rounded-md px-8">
+          <div className="text-center p-4 bg-white shadow-md rounded-md px-8 self-start">
+            <h1 className="text-center text-gray-400 text-lg font-bold mb-2 uppercase">
+              OR, CHOOSE ONE OF BUTTONS BELOW ✨
+            </h1>
+
+            <div className="mb-8">
+              <button
+                onClick={() => makeChoice("rock")}
+                className={`px-4 py-2 rounded-md mx-1 ${
+                  choice ? "bg-gray-300 cursor-not-allowed" : "bg-slate-600 hover:bg-slate-700 text-white"
+                }`}
+                disabled={!!choice}
+              >
+                🪨 Rock
+              </button>
+              <button
+                onClick={() => makeChoice("paper")}
+                className={`px-4 py-2 rounded-md mx-1 ${
+                  choice ? "bg-gray-300 cursor-not-allowed" : "bg-neutral-400 hover:bg-neutral-500 text-white"
+                }`}
+                disabled={!!choice}
+              >
+                📃 Paper
+              </button>
+              <button
+                onClick={() => makeChoice("scissors")}
+                className={`px-4 py-2 rounded-md mx-1 ${
+                  choice ? "bg-gray-300 cursor-not-allowed" : "bg-red-500 hover:bg-red-600 text-white"
+                }`}
+                disabled={!!choice}
+              >
+                ✂️ Scissors
+              </button>
+            </div>
             <h2 className="text-2xl mb-4 font-semibold">
               🫵 Your Choice : <span className="text-blue-500 capitalize">{choice}</span>
             </h2>
@@ -129,7 +135,6 @@ function RPSGame() {
                 {result}
               </h2>
             )}
-
             <p className="text-sm text-gray-400 mt-5">
               Yang bikin game malah jadi <span className="font-bold">Second Choice</span> 😭 <br />{" "}
               <span className="italic">(Yakin second choice? dipilih aja kagak 😤)</span>
@@ -137,6 +142,13 @@ function RPSGame() {
           </div>
         </div>
       )}
+      <div className="max-w-sm">
+        <p className="text-center text-sm font-bold mb-2">Made with 💖 by Gautama</p>
+        <p className="text-xs text-gray-400 text-center">
+          This app might still have some bugs, either in the model or the business processes. But hey, it's just for
+          fun, so I get to do whatever I want! 😁
+        </p>
+      </div>
     </div>
   );
 }
