@@ -142,7 +142,7 @@ function RPSGame() {
           </div>
         </div>
       )}
-      <div className="max-w-sm">
+      <div className="max-w-sm mt-5">
         <p className="text-center text-sm font-bold mb-2">Made with 💖 by Gautama</p>
         <p className="text-xs text-gray-400 text-center">
           This app might still have some bugs, either in the model or the business processes. But hey, it's just for
